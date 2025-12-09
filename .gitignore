@@ -1,2 +1,7 @@
 yvenv/*
 unsloth_compiled_cache/*
+__pycache__/*
+.gitignore
+yoloe-11l-seg.pt
+yoloe-11s-seg.pt
+mobileclip_blt.ts
