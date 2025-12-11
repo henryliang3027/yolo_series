@@ -1,11 +1,11 @@
 import os
 from PIL import Image
 
-from qwen_vlm import resize_image
+from utils import resize_image
 
 
 images_dir = '../vlm_20251030/training_data/images'
-image_path = os.path.join(images_dir, '1.jpg')
+image_path = os.path.join(images_dir, '105.jpg')
 
 
 image = Image.open(image_path)

@@ -5,21 +5,10 @@ import math
 from ultralytics import YOLOE
 from PIL import Image
 # from ministral_vlm import MinistralVLM, resize_image, pil_to_base64_url
-from qwen_vlm import QwenVLM, resize_image
+from phi_vlm import PhiVLM
+from qwen_vlm import QwenVLM
+from utils import resize_image, convert_normalized_bbox_to_pixel
 
-def convert_normalized_bbox_to_pixel(bbox, image_size):
-    """將歸一化bbox轉回圖片尺寸的bbox"""
-    width, height = image_size
-
-    x1_norm, y1_norm, x2_norm, y2_norm = bbox
-
-    # 取到小數點後兩位
-    x1_pixel = round(x1_norm * width, 2)
-    y1_pixel = round(y1_norm * height, 2)
-    x2_pixel = round(x2_norm * width, 2)
-    y2_pixel = round(y2_norm * height, 2)
-
-    return [x1_pixel, y1_pixel, x2_pixel, y2_pixel]
 
 # ministral question prefix
 MINISTRAL_QUESTION_PREFIX = "Analyze these detected products. Coordinates are normalized (0-1):\n\n"

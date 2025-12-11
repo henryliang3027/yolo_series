@@ -5,3 +5,8 @@ __pycache__/*
 yoloe-11l-seg.pt
 yoloe-11s-seg.pt
 mobileclip_blt.ts
+debug_input.jpg
+output_image.jpg
+output.jpg
+.gitignore
+yoloe_output.jpg

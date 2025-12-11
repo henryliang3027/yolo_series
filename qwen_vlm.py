@@ -4,46 +4,8 @@ import torch
 import json
 import os
 from PIL import Image
+from utils import resize_image
 
-# Load dataset
-def resize_image(img_pil, max_size=640):
-    """調整圖片大小"""
-    width, height = img_pil.size
-    if width > max_size or height > max_size:
-        if width > height:
-            new_width = max_size
-            new_height = int(height * (max_size / width))
-        else:
-            new_height = max_size
-            new_width = int(width * (max_size / height))
-        return img_pil.resize((new_width, new_height), Image.LANCZOS)
-    return img_pil
-
-
-def get_resized_bbox(bbox, original_size, resized_size):
-    """將歸一化bbox轉回原始圖片尺寸的bbox"""
-    orig_w, orig_h = original_size
-    new_w, new_h = resized_size
-
-    x1_norm, y1_norm, x2_norm, y2_norm = bbox
-
-    # Convert normalized coordinates to pixel coordinates in resized image
-    x1_resized = x1_norm * new_w
-    y1_resized = y1_norm * new_h
-    x2_resized = x2_norm * new_w
-    y2_resized = y2_norm * new_h
-
-    # Calculate scaling factors
-    scale_x = orig_w / new_w
-    scale_y = orig_h / new_h
-
-    # Convert to original image coordinates
-    x1_orig = x1_resized * scale_x
-    y1_orig = y1_resized * scale_y
-    x2_orig = x2_resized * scale_x
-    y2_orig = y2_resized * scale_y
-
-    return [x1_orig, y1_orig, x2_orig, y2_orig]
 
 # Load custom training data from JSON
 images_dir = './training_data/images'

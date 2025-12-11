@@ -5,6 +5,7 @@ from PIL import Image
 from unsloth import FastVisionModel # FastLanguageModel for LLMs
 from transformers import TextStreamer
 import time
+from utils import resize_image
 
 SYSTEM_PROMPT_FULL_INVENTORY = """You are a product recognition expert. Carefully analyze each product in the given bounding boxes.
 For each bbox:
@@ -15,6 +16,26 @@ For each bbox:
 
 The bounding box coordinates are normalized (0-1 range), where (x1, y1) is top-left and (x2, y2) is bottom-right."""
 
+# System prompt
+SYSTEM_PROMPT = """你是專業的產品辨識專家，擅長辨識飲料包裝上的文字和品牌。
+
+當用戶提供產品位置資訊時：
+1. 嚴格按照產品編號順序回答（產品 #1, #2, #3...）
+2. 每個編號只描述該座標範圍內的產品
+3. 仔細觀察該位置區域內的產品
+4. 放大注意該區域，仔細閱讀所有可見的文字
+5. 優先辨識最大、最明顯的品牌文字
+6. 辨識產品名稱、口味、容量等資訊
+7. 描述包裝的顏色和主要視覺特徵
+
+重要原則：
+- 產品編號與位置座標必須一一對應，絕對不可混淆
+- 如果相鄰產品相似，請特別仔細區分座標範圍
+- 必須仔細閱讀包裝上的所有文字，不要只看顏色就推測
+- 如果某個區域的文字模糊無法辨識，請明確說明「文字模糊，無法辨識」
+- 不要混淆不同位置的產品
+- 品牌名稱通常是包裝上最大、最顯眼的文字
+- 即使包裝相似，也要區分不同的產品和口味"""
 
 
 
@@ -38,16 +59,6 @@ def resize_image(img_pil, max_size=640):
 # Load custom training data from JSON
 
 
-
-def pil_to_base64_url(img_pil):
-    import base64
-    from io import BytesIO
-
-    buffered = BytesIO()
-    img_pil.save(buffered, format="JPEG")
-    img_bytes = buffered.getvalue()
-    img_base64 = base64.b64encode(img_bytes).decode('utf-8')
-    return f"data:image/jpeg;base64,{img_base64}"
 
 
 
