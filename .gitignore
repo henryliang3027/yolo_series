@@ -10,3 +10,4 @@ output_image.jpg
 output.jpg
 .gitignore
 yoloe_output.jpg
+train_example/*

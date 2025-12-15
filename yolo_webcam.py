@@ -1,12 +1,14 @@
 import cv2
-from ultralytics import YOLOE
+from ultralytics import YOLO
+
+# specify the model path
+model_path = "finetuned_weights/yolov11s.pt"
 
 # Initialize a YOLOE model
-model = YOLOE("yoloe-11s-seg.pt")  # or select yoloe-11s/m-seg.pt for different sizes
+model = YOLO("yolov11s.pt")  # or select yoloe-11s/m-seg.pt for different sizes
 
 # Set text prompt to detect person and bus. You only need to do this once after you load the model.
-names = ["bottle", "jar", "beverage"]
-model.set_classes(names, model.get_text_pe(names))
+names = ["bottle"]
 
 # start webcam
 cap = cv2.VideoCapture(0)
