@@ -11,3 +11,5 @@ output.jpg
 .gitignore
 yoloe_output.jpg
 train_example/*
+finetuned_weights/best_4_class_20260107.pt
+finetuned_weights/best_20251219.pt
