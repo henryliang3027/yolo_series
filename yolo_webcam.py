@@ -41,6 +41,9 @@ while True:
         x1,y1,x2,y2 = box.tolist()
         x1,y1,x2,y2 = int(x1),int(y1),int(x2),int(y2)
 
+        # class
+        label_id = int(class_id.tolist())
+
         cv2.rectangle(frame, (x1, y1), (x2, y2), colors[label_id], 3)
 
 
